@@ -3,5 +3,5 @@ import Dependencies._
 name := "persistence"
 
 libraryDependencies ++= Seq(
-  akkaActor
+  akkaActor, akkaPersistence
 )

@@ -6,23 +6,39 @@ lazy val commonSettings = Seq(
 
 lazy val `si-akka-examples` = (project in file("./"))
   .settings(commonSettings: _*)
-  .aggregate(`base`, `http`, `persistence`, `cluster`, `common`)
+  .aggregate(base, http, persistence, common, `persistence-test`, `cluster-seed`, `cluster-participant`)
 
-lazy val `base` = (project in file("./base"))
-  .dependsOn(`common`)
+lazy val base = (project in file("./base"))
+  .dependsOn(common)
   .settings(commonSettings: _*)
 
-lazy val `http` = (project in file("./http"))
-  .dependsOn(`common`)
+lazy val http = (project in file("./http"))
+  .dependsOn(common)
   .settings(commonSettings: _*)
 
-lazy val `persistence` = (project in file("./persistence"))
-  .dependsOn(`common`)
+lazy val persistence = (project in file("./persistence"))
+  .dependsOn(common)
   .settings(commonSettings: _*)
 
-lazy val `cluster` = (project in file("./cluster"))
-  .dependsOn(`common`)
+lazy val common = (project in file("./common"))
   .settings(commonSettings: _*)
 
-lazy val `common` = (project in file("./common"))
+lazy val `persistence-test` = (project in file("./persistence-test"))
+  .dependsOn(common, persistence)
+  .settings(commonSettings: _*)
+
+lazy val `cluster-common` = (project in file("./cluster-common"))
+  .dependsOn(common)
+  .settings(commonSettings: _*)
+
+lazy val `cluster-seed` = (project in file("./cluster-seed"))
+  .dependsOn(common, `cluster-common`)
+  .settings(commonSettings: _*)
+
+lazy val `cluster-participant` = (project in file("./cluster-participant"))
+  .dependsOn(common, `cluster-common`)
+  .settings(commonSettings: _*)
+
+lazy val `persistence-cluster-participant` = (project in file("./persistence-cluster-participant"))
+  .dependsOn(common, persistence, `cluster-common`)
   .settings(commonSettings: _*)
